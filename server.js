@@ -27,6 +27,9 @@ app.post("/tasks", async (req, res) => {
   try {
     const task = req.body;
     const { data, error } = await supabase.from("tasks").insert(
+      [
+        task
+      ],
     );
     res.status(200).send("Success");
   } catch (error) {
