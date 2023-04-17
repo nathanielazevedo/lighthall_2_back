@@ -26,15 +26,42 @@ app.get("/tasks", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   try {
     const task = req.body;
-    const { data, error } = await supabase.from("tasks").insert(
-      [
-        task
-      ],
-    );
+    const { data, error } = await supabase.from("tasks").insert([task]);
     res.status(200).send("Success");
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
+  }
+});
+
+app.post("/signup", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log(username, password);
+    const { user, session, error } = await supabase
+      .from("users")
+      .insert([req.body]);
+    console.log(error);
+    res.status(200).send("Success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("username", username);
+    if (data[0].password == password) {
+      res.status(200).send("Success");
+    } else {
+      res.status(401).send("Unauthorized");
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
