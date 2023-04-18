@@ -75,6 +75,21 @@ app.delete("/tasks/:id", async (req, res) => {
   }
 });
 
+app.put("/tasks/:id", async (req, res) => {
+  try {
+    const dataR = req.body;
+    const { id } = req.params;
+    const { data, error } = await supabase
+      .from("tasks")
+      .update(dataR)
+      .eq("id", id);
+    res.status(200).send("Success");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
