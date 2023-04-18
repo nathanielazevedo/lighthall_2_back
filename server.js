@@ -39,7 +39,7 @@ app.post("/login", async (req, res) => {
       .eq("username", username);
     if (error) throw new Error(error);
     if (data[0].password == password) {
-      res.status(200).send("Success");
+      res.status(200).send(data[0]);
     } else {
       res.status(401).send("Unauthorized");
     }
