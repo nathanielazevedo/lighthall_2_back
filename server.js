@@ -54,9 +54,12 @@ app.post("/login", async (req, res) => {
 ///////////////////
 
 // Get Tasks
-app.get("/tasks", async (req, res) => {
+app.get("/tasks/:userId", async (req, res) => {
   try {
-    const { data, error } = await supabase.from("tasks").select();
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("user_id", req.params.userId);
     if (error) throw new Error(error);
     res.send(data);
   } catch (error) {
