@@ -69,9 +69,12 @@ app.get("/tasks", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   try {
     const task = req.body;
-    const { data, error } = await supabase.from("tasks").insert([task]);
+    const { data, error } = await supabase
+      .from("tasks")
+      .insert([task])
+      .select();
     if (error) throw new Error(error);
-    res.status(200).send("Success");
+    res.status(200).send(data[0]);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
