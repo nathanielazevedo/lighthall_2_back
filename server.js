@@ -25,7 +25,6 @@ app.post("/signup", async (req, res) => {
       .insert([req.body])
       .select();
     if (error) throw new Error(error);
-    console.log(data);
     res.status(200).send(data[0]);
   } catch (error) {
     console.log(error);
