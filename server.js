@@ -20,9 +20,13 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Signup
 app.post("/signup", async (req, res) => {
   try {
-    const { error } = await supabase.from("users").insert([req.body]);
+    const { data, error } = await supabase
+      .from("users")
+      .insert([req.body])
+      .select();
     if (error) throw new Error(error);
-    res.status(200).send("Success");
+    console.log(data);
+    res.status(200).send(data[0]);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
