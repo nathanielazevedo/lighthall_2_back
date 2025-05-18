@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const port = 3000;
-const supabaseUrl = "https://elgioqjgqpyxbmqiujvk.supabase.co";
+const supabaseUrl = "https://wwoxvffdgibooqzpgmpc.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -24,7 +24,11 @@ app.post("/signup", async (req, res) => {
       .from("users")
       .insert([req.body])
       .select();
-    if (error) throw new Error(error);
+
+    if (error) {
+      console.log(error)
+      throw new Error(error);
+    }
     res.status(200).send(data[0]);
   } catch (error) {
     console.log(error);
@@ -79,7 +83,11 @@ app.post("/tasks", async (req, res) => {
       .from("tasks")
       .insert([task])
       .select();
-    if (error) throw new Error(error);
+
+    if (error) {
+      console.log(error)
+      throw new Error(error);
+    }
     res.status(200).send(data[0]);
   } catch (error) {
     console.log(error);
